@@ -1,27 +1,29 @@
-import os
-from typing import Literal, Optional, Any
-from pydantic import BaseModel, Field
+from pydantic import  Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 import yaml
 
 class Settings(BaseSettings):
     # load variables from .env file
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
+    config_data: dict = Field(default_factory=dict)
 
-    AI_GATEWAY = Field(...)
-    AI_GATEWAY_KEY = Field(...)
-    GOOGLE_PLACES_API_KEY = Field(...)
-    TAVILY_API_KEY = Field(...)
-    OPEN_WEATHER_API_KEY = Field(...)
-    EXCHANGE_RATE_API_KEY = Field(...)
-    FOURSQUARE_PLACES_API_KEY = Field(...)
-    SUPABASE_DB_URL: str = Field(...)
-    EXCHANGE_RATE_API: str = Field(...)
+    config_data: dict = Field(default_factory=dict)
+    GROQ_API_KEY: str = Field(...)
+    OPENAI_API_KEY: str = Field(...)
+    GOOGLE_PLACES_API_KEY: str = Field(...)
+    TAVILY_API_KEY: str = Field(...)
+    OPEN_WEATHER_API_KEY: str = Field(...)
+    EXCHANGE_RATE_API_KEY: str = Field(...)
+    FOURSQUARE_PLACES_API_KEY: str = Field(...)
 
-    def load_model_config(self, config_path: str = "model_config.yaml") -> dict:
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.config_data = self.load_model_config()
+
+    def load_model_config(self, config_path: str = "src/config/model_config.yaml") -> dict:
         with open(config_path, "r") as file:
-            self.config = yaml.safe_load(file) # load the YAML file and parse it into a Python dictionary
-        return self.config
+            self.config_data = yaml.safe_load(file) # load the YAML file and parse it into a Python dictionary
+        return self.config_data
     
     def __getitem__(self, key):
-        return self.config[key]
+        return self.config_data[key]

@@ -1,36 +1,37 @@
-import os
 from dotenv import load_dotenv
 from typing import Literal, Optional, Any
-from pydantic import BaseModel, Field
-from pydantic_settings import BaseSettings, SettingsConfigDict
-import yaml
+from pydantic import BaseModel, Field, ConfigDict
 from src.config.settings import Settings
 from langchain_groq import ChatGroq
 from langchain_openai import ChatOpenAI
+import logging
 
+logging.basicConfig(level=logging.INFO)
 
-class ModelLoader:
-    def __init__(self, config_loader):
-        self.config_loader = config_loader
-
-    def load_model(self, provider):
-        llm_config = self.config_loader.get_llm_config(provider)
-        if not llm_config:
-            raise ValueError(f"No configuration found for provider: {provider}")
-        
-        # Here you would add logic to initialize and return the model based on the configuration
-        # For example, if using OpenAI's API:
-        if llm_config['provider'] == 'openai':
-            from openai import OpenAI
-            return OpenAI(model=llm_config['model'], temperature=llm_config['temperature'])
-        
-        # Add logic for other providers as needed
-        raise NotImplementedError(f"Model loading for provider {provider} is not implemented yet.")
+class ModelLoader(BaseModel): 
+    model: Literal["groq", "openai"] = "groq"
+    settings: Settings = Field(default_factory=Settings)
     
+    model_config = ConfigDict(arbitrary_types_allowed=True)  
+    
+    def load_llm(self):
+        logging.info(f"Loading model from provider: {self.model}")
+        
+        if self.model == "groq":
+            api_key = self.settings.GROQ_API_KEY 
+            model_id = self.settings.config_data["llm"]["groq"]["model_name"]
+            
+            return ChatGroq(model=model_id, api_key=api_key)
+            
+        elif self.model == "openai":
+            api_key = self.settings.OPENAI_API_KEY 
+            model_id = self.settings.config_data["llm"]["openai"]["model_name"]
+            
+            return ChatOpenAI(model=model_id, api_key=api_key)
 
-class Settings(BaseModel):
-    llm_provider: Literal['openai', 'groq'] = Field(..., description="The LLM provider to use.")
-    config_path: str = Field(..., description="Path to the configuration file.")
+        logging.info(f"Loaded model: {model_id}")
 
-    def __post_init__(self):
-        self.config = load_config(self.config_path)
+
+if __name__ == "__main__":
+    model_loader = ModelLoader(model="groq")
+    llm = model_loader.load_llm()
