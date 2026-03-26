@@ -140,7 +140,7 @@ export default function VagaBotUI() {
             <Sparkles className="w-8 h-8 text-blue-400 mb-4 group-hover:scale-110 transition-transform" />
             <h3 className="text-xl font-bold text-white mb-2">Smart Synthesis</h3>
             <p className="text-slate-400 leading-relaxed font-light">
-              Autonomous multi-agent orchestration that validates meteorological data and market liquidity trends in real-time to ensure logistical viability.
+              Autonomous multi-agent orchestration that synthesize real-time global data to provide personalized travel itenaries 
             </p>
           </div>
 
@@ -175,7 +175,6 @@ export default function VagaBotUI() {
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-center md:text-left">
             <p className="text-white font-bold text-xl tracking-tighter">Samuel Ozechi</p>
-            <p className="text-slate-500 text-sm mt-1 font-light italic">AI Solutions Architect</p>
           </div>
           
           <div className="flex gap-8">
