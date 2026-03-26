@@ -1,0 +1,9 @@
+LICENSE
+README.md
+pyproject.toml
+src/__init__.py
+vagabot.egg-info/PKG-INFO
+vagabot.egg-info/SOURCES.txt
+vagabot.egg-info/dependency_links.txt
+vagabot.egg-info/requires.txt
+vagabot.egg-info/top_level.txt
