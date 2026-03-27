@@ -115,15 +115,14 @@ export default function VagaBotUI() {
                     </div>
                   ) : (
                     <motion.div 
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        className="prose prose-invert prose-slate max-w-none 
-                                  prose-headings:text-white prose-headings:font-bold prose-headings:mt-8 prose-headings:mb-4
-                                  prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-4
-                                  prose-li:text-slate-300 prose-strong:text-blue-400 prose-strong:font-bold"
-                      >
-                        <ReactMarkdown>{result}</ReactMarkdown>
-                      </motion.div>
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      className="prose prose-invert prose-slate max-w-none 
+                                prose-headings:text-white prose-headings:font-bold 
+                                prose-p:text-slate-300 prose-strong:text-blue-400"
+                    >
+                      <ReactMarkdown>{result}</ReactMarkdown>
+                    </motion.div>
                   )}
                 </CardContent>
               </Card>
