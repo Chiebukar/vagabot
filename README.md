@@ -204,7 +204,7 @@ http://localhost:3000
 
 ---
 
-## 🧩 Future Improvements
+## Future Improvements
 
 * Chat-style conversational UI
 * Streaming responses
@@ -213,7 +213,7 @@ http://localhost:3000
 
 ---
 
-## 👤 Author
+## Author
 
 Samuel Ozechi
 
@@ -222,6 +222,6 @@ Samuel Ozechi
 
 ---
 
-## 📄 License
+## License
 
 This project is open-source and available under the MIT License.
